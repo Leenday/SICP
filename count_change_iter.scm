@@ -1,0 +1,20 @@
+(define (count-change-iter sum amount kinds-of-coins counter prev-koc)
+    (display sum) (newline)
+    ;(display kinds-of-coins) (newline)
+    (cond ((and (= sum amount) (= kinds-of-coins 1)) (+ counter 1))
+          ((= sum amount) 
+            (if (= kinds-of-coins prev-koc)
+            (count-change-iter (first-denomination kinds-of-coins) amount (- kinds-of-coins 1) (+ counter 1) kinds-of-coins)
+            (count-change-iter (first-denomination kinds-of-coins) amount kinds-of-coins (+ counter 1) (- kinds-of-coins 1)))))
+          (else (count-change-iter (+ sum (first-denomination kinds-of-coins)) amount kinds-of-coins counter prev-koc)))
+
+
+(define (first-denomination kinds-of-coins)
+    ;(display kinds-of-coins) (newline)
+    (cond ((= kinds-of-coins 1) 1)
+          ((= kinds-of-coins 2) 5)
+          ((= kinds-of-coins 3) 10)
+          ((= kinds-of-coins 4) 25)
+          ((= kinds-of-coins 5) 50)))
+
+;(count-change-iter 0 10 2 0 2)
