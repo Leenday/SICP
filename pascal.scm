@@ -1,0 +1,10 @@
+(define (pascal column row)
+    (cond ((or (= column 1) (= row 1) (= row column)) 1)
+          (else (+ (pascal (- column 1) (- row 1)) (pascal (- column 1) row)))))
+
+(pascal 1 1)
+(pascal 3 2)
+(pascal 4 3)
+(pascal 5 2)
+(pascal 5 3)
+(pascal 7 4)
