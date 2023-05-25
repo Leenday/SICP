@@ -1,2 +1,2 @@
 # SICP
-Solution on racket
+My solutions SICP exercises, and notes.
