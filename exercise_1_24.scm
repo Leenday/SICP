@@ -4,7 +4,7 @@
   (start-prime-test n (runtime)))
 
 (define (start-prime-test n start-time)
-    (if (prime? n)
+    (if (fast-prime? n 10)
       (report-prime (- (runtime) start-time))))
 
 (define (report-prime elapsed-time)
@@ -32,9 +32,27 @@
     (timed-prime-test num) 
     (cond ((= nums-count 3) (display "Done!"))
           ((even? num) (search-for-primes (+ num 1) nums-count))
-          ((prime? num) ((search-for-primes (+ num 2) (+ nums-count 1))))
+          ((fast-prime? num 10) ((search-for-primes (+ num 2) (+ nums-count 1))))
           (else (search-for-primes (+ num 2) nums-count))))
     
+(define (expmod base exp m)
+    (cond ((= exp 0) 1)
+          ((even? exp)
+           (remainder (square (expmod base (/ exp 2) m))
+                              m))
+           (else
+            (remainder (* base (expmod base (- exp 1) m))
+                       m))))
+
+(define (fermat-test n)
+    (define (try-it a)
+      (= (expmod a n n) a))
+    (try-it (+ 1 (random (- n 1)))))
+
+(define (fast-prime? n times)
+    (cond ((= times 0) true)
+          ((fermat-test n) (fast-prime? n (- times 1)))
+          (else false)))
 
 ;(timed-prime-test 3571)
 ;(search-for-primes 1000 0)
