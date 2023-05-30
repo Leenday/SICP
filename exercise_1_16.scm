@@ -9,7 +9,6 @@
 ;b^n = (b^n/2)^2 = (b^2)^n/2 if n%2 = 0
 ;b^n = b * b ^ (n - 1) if n%2 = 1
 (define (fast-expt b n a)
-  (display n) (display "|") (display a) (newline)
     (cond ((= n 0) a)
           ((even? n) (fast-expt (square b) (/ n 2) a))
           (else (fast-expt b (- n 1) (* a b)))))
